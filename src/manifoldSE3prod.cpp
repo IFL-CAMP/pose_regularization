@@ -19,7 +19,7 @@
 #include <complex>
 #include <manifold.h>
 
-#define EPSILON 0.00000001
+constexpr double EPSILON = 0.00000001;
 
 namespace manifold {
 

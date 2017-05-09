@@ -19,11 +19,11 @@
 #include <limits>
 #include <manifold.h>
 
-#define EPSILON 0.000001
+constexpr double EPSILON = 0.000001;
 
 #ifdef SE3PROD
-    #define ELEMENTLENGTH 16
-    #define DIMENSION 6
+    constexpr int ELEMENTLENGTH = 16;
+    constexpr int DIMENSION = 6;
 #endif
 
 namespace manifold {
