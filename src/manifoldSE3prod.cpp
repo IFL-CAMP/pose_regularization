@@ -1,3 +1,19 @@
+/* lightweight implementation for processing manifold valued data
+ *
+ * written by Maximilian Baust
+ *
+ * e-mail: maximilian.baust@tum.de
+ *
+ * 08-16-2014
+ *
+ * This file has been simplified for pose denoising
+ *
+ * by Maximilian Baust on
+ *
+ * 05-09-2017
+ *
+ */
+
 #include <iostream>
 #include <cmath>
 #include "../include/manifold.h"
