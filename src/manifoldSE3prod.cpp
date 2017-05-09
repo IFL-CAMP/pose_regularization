@@ -19,7 +19,7 @@
 #include <complex>
 #include <manifold.h>
 
-constexpr double EPSILON = 0.00000001;
+constexpr double SE3_EPSILON = 0.00000001;
 
 namespace manifold {
 
@@ -86,7 +86,7 @@ namespace manifold {
 		/* calculate norm of omega */
 		double no = std::sqrt(omega_x*omega_x + omega_y*omega_y + omega_z*omega_z);
 
-		if (std::abs(no) > EPSILON)
+		if (std::abs(no) > SE3_EPSILON)
 		{
 
 			/* calculate factors */
@@ -137,7 +137,7 @@ namespace manifold {
 			Ao[14] = 0.0;
 			Ao[15] = 1.0;
 
-		} /* end if ( abs(no) > EPSILON ) */
+		} /* end if ( abs(no) > SE3_EPSILON ) */
 
 	};
 	/******************* end matrix exponential *******************/
@@ -158,7 +158,7 @@ namespace manifold {
         double gamma = std::sqrt( a*a + b*b );
         
         /* compose U */
-        if ( beta > EPSILON && gamma > EPSILON )
+        if ( beta > SE3_EPSILON && gamma > SE3_EPSILON )
         {
             U[0] = c/beta;
             U[1] = b/beta;
@@ -210,7 +210,7 @@ namespace manifold {
         double phi = (acos((std::complex<double>)(0.5*(C[0] + C[5] + C[10] - 1.0)))).real();
 		
         /* calculate result for SO(3) part */
-        if ( (std::abs(phi) > EPSILON) && (std::abs(phi) < M_PI-EPSILON) )
+        if ( (std::abs(phi) > SE3_EPSILON) && (std::abs(phi) < M_PI-SE3_EPSILON) )
         {
             /* get omegas */
             double omega_x = 0.5*phi*(C[6] - C[9])/std::sin(phi);
@@ -330,11 +330,11 @@ namespace manifold {
 		outputCoefficients[5] = 0.5*inputCoefficients[5];
 
 		/* modify if necessary */
-		if (t > EPSILON && eigenvalues[1] > EPSILON)
+		if (t > SE3_EPSILON && eigenvalues[1] > SE3_EPSILON)
 		{
 			outputCoefficients[1] = inputCoefficients[1] * std::sin(std::sqrt(eigenvalues[1])*t / 2.0) / (std::sin(std::sqrt(eigenvalues[1])*t) + 0.000000000001);
 		}
-		if (t > EPSILON && eigenvalues[2] > EPSILON)
+		if (t > SE3_EPSILON && eigenvalues[2] > SE3_EPSILON)
 		{
 			outputCoefficients[2] = inputCoefficients[2] * std::sin(std::sqrt(eigenvalues[2])*t / 2.0) / (std::sin(std::sqrt(eigenvalues[2])*t) + 0.000000000001);
 		}
