@@ -194,7 +194,7 @@ namespace manifold {
 	/******************* end Schur decompositon *******************/
     
     /************* logarithmMap::operator() *************/
-    double logarithmMap::operator() ( double * baseElPtr,
+    double LogarithmMap::operator() ( double * baseElPtr,
                                       double * destElPtr,
                                       double * resultElPtr ) 
     {
@@ -210,7 +210,7 @@ namespace manifold {
         double phi = (acos((std::complex<double>)(0.5*(C[0] + C[5] + C[10] - 1.0)))).real();
 		
         /* calculate result for SO(3) part */
-        if ( (std::abs(phi) > EPSILON) && (std::abs(phi) < PI-EPSILON) )
+        if ( (std::abs(phi) > EPSILON) && (std::abs(phi) < M_PI-EPSILON) )
         {
             /* get omegas */
             double omega_x = 0.5*phi*(C[6] - C[9])/std::sin(phi);
@@ -272,7 +272,7 @@ namespace manifold {
     /*********** end logarithmMap::operator() ***********/
     
     /************* exponentialMap::operator() *************/
-    void exponentialMap::operator() ( double * baseElPtr,
+    void ExponentialMap::operator() ( double * baseElPtr,
                                       double * destElPtr,
                                       double * resultElPtr ) 
     {
@@ -298,7 +298,7 @@ namespace manifold {
     /*********** end exponentialMap::operator() ***********/
     
     /****************** innerProduct::operator() ******************/
-    double innerProduct::operator() ( double * elementPtr1,
+    double InnerProduct::operator() ( double * elementPtr1,
                                       double * elementPtr2,
                                       double * baseElPtr )
     {
@@ -315,7 +315,7 @@ namespace manifold {
     /**************** end innerProduct::operator() ****************/
     
     /*************** adjustCoefficients::operator() ***************/
-    void adjustCoefficients::operator() ( double * inputCoefficients,
+    void AdjustCoefficients::operator() ( double * inputCoefficients,
                                           double * outputCoefficients,
                                           double * eigenvalues,
                                           double t )
@@ -344,7 +344,7 @@ namespace manifold {
     /************* end adjustCoefficients::operator() *************/
     
     /****************** computeFrame::operator() ******************/
-    void computeFrame::operator() ( double * tagentSpaceElement,
+    void ComputeFrame::operator() ( double * tagentSpaceElement,
                                     double * basisElements,
                                     double * eigenvalues,
 									double * p) // p not used
@@ -468,7 +468,7 @@ namespace manifold {
     /**************** end computeFrame::operator() ****************/
     
     /*************** parallelTransport::operator() ****************/
-    void parallelTransport::operator() ( double * inputFrameVectors,
+    void ParallelTransport::operator() ( double * inputFrameVectors,
                                          double * outputFrameVectors,
                                          double * baseElPtr,
                                          double * destElPtr )
@@ -497,7 +497,7 @@ namespace manifold {
 		double * aux = new double[_elementLength];
         
         /* initialize log map */
-		logarithmMap logMap(_elementLength);
+		LogarithmMap logMap(_elementLength);
         
         /* compute */
         logMap(baseElPtr, destElPtr, v);
@@ -554,7 +554,7 @@ namespace manifold {
     /************** end parallelTransport::operator() *************/
     
     /*************** conjugateMap::operator() ****************/
-    void conjugateMap::operator() ( double * baseElPtr,
+    void ConjugateMap::operator() ( double * baseElPtr,
                                     double * destElPtr,
                                     double * resultElPtr )
     {

@@ -23,10 +23,10 @@ namespace manifold {
     enum regularization { HUBER=0, L1, L2 };
     
     /* functor for logarithm map */
-    class logarithmMap
+    class LogarithmMap
     {
     public:
-        logarithmMap ( int elementLength ) : 
+        LogarithmMap ( int elementLength ) :
             _elementLength( elementLength ) {}
             
         double operator() ( double * baseElPtr,
@@ -37,10 +37,10 @@ namespace manifold {
     };
     
     /* functor for exponential map */
-    class exponentialMap
+    class ExponentialMap
     {
     public:
-        exponentialMap ( int elementLength ) : 
+        ExponentialMap ( int elementLength ) :
             _elementLength( elementLength ) {}
             
         void operator() ( double * baseElPtr,
@@ -51,10 +51,10 @@ namespace manifold {
     };
 
 	/* functor for inner product */
-    class innerProduct
+    class InnerProduct
     {
     public:
-        innerProduct ( int elementLength ) : 
+        InnerProduct ( int elementLength ) :
             _elementLength( elementLength ) {}
             
         double operator() ( double * elementPtr1,
@@ -66,10 +66,10 @@ namespace manifold {
     };
     
     /* functor for adjusting coefficients of moving frame */
-    class adjustCoefficients
+    class AdjustCoefficients
     {
     public:
-        adjustCoefficients ( int dimension ) : 
+        AdjustCoefficients ( int dimension ) :
             _dimension( dimension ) {}
             
         void operator() ( double * inputCoefficients,
@@ -82,10 +82,10 @@ namespace manifold {
     };
     
     /* functor for computing the moving frame */
-    class computeFrame
+    class ComputeFrame
     {
     public:
-        computeFrame ( int dimension, int elementLength ) : 
+        ComputeFrame ( int dimension, int elementLength ) :
             _dimension( dimension ),
             _elementLength( elementLength ) {}
             
@@ -100,10 +100,10 @@ namespace manifold {
     };
     
     /* functor for computing the parallel transport */
-    class parallelTransport
+    class ParallelTransport
     {
     public:
-        parallelTransport ( int dimension, int elementLength ) : 
+        ParallelTransport ( int dimension, int elementLength ) :
             _dimension( dimension ),
             _elementLength( elementLength ) {}
             
@@ -117,10 +117,10 @@ namespace manifold {
         int _elementLength;
     };
     
-    class conjugateMap
+    class ConjugateMap
     {
     public:
-        conjugateMap ( int elementLength ) :
+        ConjugateMap ( int elementLength ) :
         _elementLength( elementLength ) {}
         
         void operator() ( double * baseElPtr,
@@ -132,12 +132,12 @@ namespace manifold {
 
     
     /* functor for computing first order proximal mappings */
-    class proximalMapFirstOrder
+    class ProximalMapFirstOrder
     {
         
     public:
         
-        proximalMapFirstOrder ( int regularization, int elementLength ) : 
+        ProximalMapFirstOrder ( int regularization, int elementLength ) :
             _regularization( regularization ),
             _elementLength( elementLength ),
             _log( elementLength ),
@@ -164,19 +164,19 @@ namespace manifold {
         
         int _elementLength;
         int _regularization;
-        logarithmMap _log;
-        exponentialMap _exp;
+        LogarithmMap _log;
+        ExponentialMap _exp;
         
     };
     /* end functor for computing first order proximal mappings */
 
     /* functor for computing second order proximal mappings */
-    class proximalMapSecondOrder
+    class ProximalMapSecondOrder
     {
         
     public:
             
-        proximalMapSecondOrder( int regularization, int dimension, int elementLength ) : 
+        ProximalMapSecondOrder( int regularization, int dimension, int elementLength ) :
             _regularization( regularization ),
             _dimension( dimension ),
             _elementLength( elementLength ),
@@ -202,12 +202,12 @@ namespace manifold {
         int _elementLength;
         int _dimension;
         int _regularization;
-        logarithmMap _log;
-        exponentialMap _exp;
-        innerProduct _prod;
-        adjustCoefficients _adjust;
-        computeFrame _frame;
-        parallelTransport _par;
+        LogarithmMap _log;
+        ExponentialMap _exp;
+        InnerProduct _prod;
+        AdjustCoefficients _adjust;
+        ComputeFrame _frame;
+        ParallelTransport _par;
         
     };
     /* end functor for computing second order proximal mappings */

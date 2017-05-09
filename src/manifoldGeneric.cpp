@@ -156,7 +156,7 @@ namespace manifold {
     }
     
     /*************** proximalMapFirstOrder::operator() ***************/
-    void proximalMapFirstOrder::operator() ( double * startElPtr,
+    void ProximalMapFirstOrder::operator() ( double * startElPtr,
                                              double * destElPtr,
                                              double lambda,
                                              double * startElResPtr )
@@ -183,7 +183,7 @@ namespace manifold {
         
     };
     
-    void proximalMapFirstOrder::operator() ( double * startElPtr,
+    void ProximalMapFirstOrder::operator() ( double * startElPtr,
                                              double * destElPtr,
                                              double alpha,
                                              double lambda,
@@ -212,7 +212,7 @@ namespace manifold {
         
     };
     
-    void proximalMapFirstOrder::operator() ( double * startElPtr,
+    void ProximalMapFirstOrder::operator() ( double * startElPtr,
                                              double * destElPtr,
                                              double alpha,
                                              double lambda,
@@ -247,7 +247,7 @@ namespace manifold {
     /************* end proximalMapFirstOrder::operator() *************/
         
     /*************** proximalMapSecondOrder::operator() ***************/
-    void proximalMapSecondOrder::operator() ( double * x1,
+    void ProximalMapSecondOrder::operator() ( double * x1,
                                               double * x2,
                                               double * x3,
                                               double beta,
@@ -533,9 +533,9 @@ namespace manifold {
 								 int inner_steps)
     {
         /* initialize functors for proximal mappings */
-        proximalMapFirstOrder proxData( p, ELEMENTLENGTH );
-        proximalMapFirstOrder proxReg1stOrder( q, ELEMENTLENGTH );
-        proximalMapSecondOrder proxReg2ndOrder( r, DIMENSION, ELEMENTLENGTH );
+        ProximalMapFirstOrder proxData( p, ELEMENTLENGTH );
+        ProximalMapFirstOrder proxReg1stOrder( q, ELEMENTLENGTH );
+        ProximalMapSecondOrder proxReg2ndOrder( r, DIMENSION, ELEMENTLENGTH );
 		
         /* compute total length of array */
         int arrayLength = m*n*s*ELEMENTLENGTH;
@@ -708,8 +708,8 @@ namespace manifold {
     {
         
         /* initialize functors for geodesic distances */
-        logarithmMap logMap( ELEMENTLENGTH );
-        exponentialMap expMap( ELEMENTLENGTH );
+        LogarithmMap logMap( ELEMENTLENGTH );
+        ExponentialMap expMap( ELEMENTLENGTH );
         
         /* initialize cache memory */
         double * cache1 = new double[ELEMENTLENGTH];
