@@ -4,7 +4,7 @@ clc;
 
 addpath('..')
 
-load('../data/testData.mat')
+load('../../data/testData.mat')
 
 % get number of poses
 N = size(sensorInWorld,3);

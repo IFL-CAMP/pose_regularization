@@ -4,7 +4,7 @@ clc;
 
 addpath('..')
 
-load('../data/algorithmCalibrationNDI')
+load('../../data/algorithmCalibrationNDI')
 
 % get number of poses
 N = size(trajectoryNDI,3);
