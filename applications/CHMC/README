@@ -1,0 +1,10 @@
+The main function is constrainedHMC which is reasonably simply written.
+
+See gaussianExpt.m and binghamExpt.m for the Gaussian and Bingham-von Mises-Fisher experiments.
+
+All code is copyright 2012 Marcus Brubaker and is made available for personal and academic use only.  If you wish to use this code for commercial purposes, permission must be obtained.  Contact Marcus Brubaker (mbrubake@cs.toronto.edu) for details.
+
+Any use of this code in published work should cite:
+
+"A Family of MCMC Methods on Implicitly Defined Manifolds". Marcus A Brubaker, Mathieu Salzmann and Raquel Urtasun.  In Proceedings of AISTATS 2012.
+
