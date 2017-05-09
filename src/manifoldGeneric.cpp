@@ -17,8 +17,7 @@
 #include <iostream>
 #include <cmath>
 #include <limits>
-#include "manifold.h"
-#include "mex.h"
+#include "../include/manifold.h"
 #include <ctime>
 
 #define EPSILON 0.000001

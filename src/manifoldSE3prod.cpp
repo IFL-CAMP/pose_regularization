@@ -1,8 +1,7 @@
 #include <iostream>
 #include <cmath>
-#include "manifold.h"
+#include "../include/manifold.h"
 #include <complex>
-#include "mex.h"
 
 #define PI 3.141592653589793
 #define EPSILON 0.00000001

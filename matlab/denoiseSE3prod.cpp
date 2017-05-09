@@ -7,7 +7,7 @@
  */
 
 #include "mex.h"
-#include "manifold.h"
+#include "../include/manifold.h"
 
 using namespace manifold;
 
