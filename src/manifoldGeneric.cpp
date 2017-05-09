@@ -22,7 +22,7 @@
 constexpr double EPSILON = 0.000001;
 
 #ifdef SE3PROD
-    constexpr int ELEMENTLENGTH = 16;
+    constexpr int ELEMENT_LENGTH = 16;
     constexpr int DIMENSION = 6;
 #endif
 
@@ -32,7 +32,7 @@ namespace manifold {
     bool wrongElementLength( int value )
     {
         bool flag = true;
-        if ( value == ELEMENTLENGTH ) { flag = false; }
+        if ( value == ELEMENT_LENGTH ) { flag = false; }
         return flag;
     }
     
@@ -533,21 +533,21 @@ namespace manifold {
 								 int inner_steps)
     {
         /* initialize functors for proximal mappings */
-        ProximalMapFirstOrder proxData( p, ELEMENTLENGTH );
-        ProximalMapFirstOrder proxReg1stOrder( q, ELEMENTLENGTH );
-        ProximalMapSecondOrder proxReg2ndOrder( r, DIMENSION, ELEMENTLENGTH );
+        ProximalMapFirstOrder proxData( p, ELEMENT_LENGTH );
+        ProximalMapFirstOrder proxReg1stOrder( q, ELEMENT_LENGTH );
+        ProximalMapSecondOrder proxReg2ndOrder( r, DIMENSION, ELEMENT_LENGTH );
 		
         /* compute total length of array */
-        int arrayLength = m*n*s*ELEMENTLENGTH;
+        int arrayLength = m*n*s*ELEMENT_LENGTH;
         
         /* initialize x */
         for ( int i = 0; i < arrayLength; ++i ) { x[i] = f[i]; }
         
         /* initialize caches */
-        double * cache1 = new double[ELEMENTLENGTH];
-        double * cache2 = new double[ELEMENTLENGTH];
-        double * cache3 = new double[ELEMENTLENGTH];
-		double * cache4 = new double[ELEMENTLENGTH];
+        double * cache1 = new double[ELEMENT_LENGTH];
+        double * cache2 = new double[ELEMENT_LENGTH];
+        double * cache3 = new double[ELEMENT_LENGTH];
+		double * cache4 = new double[ELEMENT_LENGTH];
 
         /* main iteration */
         for ( int ll = 0; ll < steps; ++ll ) {
@@ -559,9 +559,9 @@ namespace manifold {
             for ( int k = 0; k < s; ++k ) {
                 for ( int j = 0; j < n; ++j ) {
                     for ( int i = 0; i < m; ++i ) {
-                        int index = (k*m*n + j*m + i)*ELEMENTLENGTH;
+                        int index = (k*m*n + j*m + i)*ELEMENT_LENGTH;
                         proxData( &x[index], &f[index], lambda, cache1 );
-                            for ( int l = 0; l < ELEMENTLENGTH; ++l ) {
+                            for ( int l = 0; l < ELEMENT_LENGTH; ++l ) {
                             x[index+l] = cache1[l];
                         }                        
                     }
@@ -576,10 +576,10 @@ namespace manifold {
                 for ( int k = 0; k < s; ++k ) {
                     for ( int j = 0; j < n-1; ++j ) {
                         for ( int i = 0; i < m; ++i ) {
-                            int index1 = (k*m*n + j*m + i)*ELEMENTLENGTH;
-                            int index2 = (k*m*n + (j+1)*m + i)*ELEMENTLENGTH;
+                            int index1 = (k*m*n + j*m + i)*ELEMENT_LENGTH;
+                            int index2 = (k*m*n + (j+1)*m + i)*ELEMENT_LENGTH;
                             proxReg1stOrder( &x[index1], &x[index2], alpha, lambda, cache1, cache2 );
-                            for ( int l = 0; l < ELEMENTLENGTH; ++l ) {
+                            for ( int l = 0; l < ELEMENT_LENGTH; ++l ) {
                                 x[index1+l] = cache1[l];
                                 x[index2+l] = cache2[l];
                             }
@@ -592,10 +592,10 @@ namespace manifold {
                 for ( int k = 0; k < s; ++k ) {
                     for ( int j = 0; j < n; ++j ) {
                         for ( int i = 0; i < m-1; ++i ) {
-                            int index1 = (k*m*n + j*m + i)*ELEMENTLENGTH;
-                            int index2 = (k*m*n + j*m + (i+1))*ELEMENTLENGTH;
+                            int index1 = (k*m*n + j*m + i)*ELEMENT_LENGTH;
+                            int index2 = (k*m*n + j*m + (i+1))*ELEMENT_LENGTH;
                             proxReg1stOrder( &x[index1], &x[index2], alpha, lambda, cache1, cache2 );
-                            for ( int l = 0; l < ELEMENTLENGTH; ++l ) {
+                            for ( int l = 0; l < ELEMENT_LENGTH; ++l ) {
                                 x[index1+l] = cache1[l];
                                 x[index2+l] = cache2[l];
                             }
@@ -607,10 +607,10 @@ namespace manifold {
                 for ( int k = 0; k < s-1; ++k ) {
                     for ( int j = 0; j < n; ++j ) {
                         for ( int i = 0; i < m; ++i ) {
-                            int index1 = (k*m*n + j*m + i)*ELEMENTLENGTH;
-                            int index2 = ((k+1)*m*n + j*m + i)*ELEMENTLENGTH;
+                            int index1 = (k*m*n + j*m + i)*ELEMENT_LENGTH;
+                            int index2 = ((k+1)*m*n + j*m + i)*ELEMENT_LENGTH;
                             proxReg1stOrder( &x[index1], &x[index2], alpha, lambda, cache1, cache2 );
-                            for ( int l = 0; l < ELEMENTLENGTH; ++l ) {
+                            for ( int l = 0; l < ELEMENT_LENGTH; ++l ) {
                                 x[index1+l] = cache1[l];
                                 x[index2+l] = cache2[l];
                             }
@@ -629,12 +629,12 @@ namespace manifold {
                     for ( int j = 0; j < n; ++j ) {
                         for ( int i = 1; i < m-1; ++i ) {
                             
-                            int index1 = (k*m*n + j*m + (i-1))*ELEMENTLENGTH;
-                            int index2 = (k*m*n + j*m + i)*ELEMENTLENGTH;
-                            int index3 = (k*m*n + j*m + (i+1))*ELEMENTLENGTH;
+                            int index1 = (k*m*n + j*m + (i-1))*ELEMENT_LENGTH;
+                            int index2 = (k*m*n + j*m + i)*ELEMENT_LENGTH;
+                            int index3 = (k*m*n + j*m + (i+1))*ELEMENT_LENGTH;
 
                             proxReg2ndOrder( &x[index1], &x[index2], &x[index3], beta, lambda, inner_factor, inner_steps, cache1, cache2, cache3 );
-                            for ( int l = 0; l < ELEMENTLENGTH; ++l ) {
+                            for ( int l = 0; l < ELEMENT_LENGTH; ++l ) {
                                 x[index1+l] = cache1[l];
                                 x[index2+l] = cache2[l];
                                 x[index3+l] = cache3[l];
@@ -647,11 +647,11 @@ namespace manifold {
                 for (int k = 0; k < s; ++k) {
                     for (int j = 1; j < n-1; ++j) {
                         for (int i = 1; i < m-1; ++i) {
-                            int index1 = (k*m*n + (j - 1)*m + i)*ELEMENTLENGTH;
-                            int index2 = (k*m*n + j*m + i)*ELEMENTLENGTH;
-                            int index3 = (k*m*n + (j + 1)*m + i)*ELEMENTLENGTH;
+                            int index1 = (k*m*n + (j - 1)*m + i)*ELEMENT_LENGTH;
+                            int index2 = (k*m*n + j*m + i)*ELEMENT_LENGTH;
+                            int index3 = (k*m*n + (j + 1)*m + i)*ELEMENT_LENGTH;
                             proxReg2ndOrder(&x[index1], &x[index2], &x[index3], beta, lambda, inner_factor, inner_steps, cache1, cache2, cache3);
-                            for (int l = 0; l < ELEMENTLENGTH; ++l) {
+                            for (int l = 0; l < ELEMENT_LENGTH; ++l) {
                                 x[index1 + l] = cache1[l];
                                 x[index2 + l] = cache2[l];
                                 x[index3 + l] = cache3[l];
@@ -664,11 +664,11 @@ namespace manifold {
                 for ( int k = 1; k < s-1; ++k ) {
                     for ( int j = 0; j < n; ++j ) {
                         for ( int i = 0; i < m; ++i ) {
-                            int index1 = ((k-1)*m*n + j*m + i)*ELEMENTLENGTH;
-                            int index2 = (k*m*n + j*m + i)*ELEMENTLENGTH;
-                            int index3 = ((k+1)*m*n + j*m + i)*ELEMENTLENGTH;
+                            int index1 = ((k-1)*m*n + j*m + i)*ELEMENT_LENGTH;
+                            int index2 = (k*m*n + j*m + i)*ELEMENT_LENGTH;
+                            int index3 = ((k+1)*m*n + j*m + i)*ELEMENT_LENGTH;
 							proxReg2ndOrder(&x[index1], &x[index2], &x[index3], beta, lambda, inner_factor, inner_steps, cache1, cache2, cache3);
-                            for ( int l = 0; l < ELEMENTLENGTH; ++l ) {
+                            for ( int l = 0; l < ELEMENT_LENGTH; ++l ) {
                                 x[index1+l] = cache1[l];
                                 x[index2+l] = cache2[l];
                                 x[index3+l] = cache3[l];
@@ -708,34 +708,34 @@ namespace manifold {
     {
         
         /* initialize functors for geodesic distances */
-        LogarithmMap logMap( ELEMENTLENGTH );
-        ExponentialMap expMap( ELEMENTLENGTH );
+        LogarithmMap logMap( ELEMENT_LENGTH );
+        ExponentialMap expMap( ELEMENT_LENGTH );
         
         /* initialize cache memory */
-        double * cache1 = new double[ELEMENTLENGTH];
-        double * cache2 = new double[ELEMENTLENGTH];
+        double * cache1 = new double[ELEMENT_LENGTH];
+        double * cache2 = new double[ELEMENT_LENGTH];
         
         /* initialize constant for efficient normalization */
         double c = 1.0/( (double)numberOfElements );
 		
 		/* store result */
-        for ( int k = 0; k < ELEMENTLENGTH; ++k ) { result[k] = x[k]; }
+        for ( int k = 0; k < ELEMENT_LENGTH; ++k ) { result[k] = x[k]; }
         
         /* main iteration */
         for ( int i = 0; i < steps; ++i )
         {
             /* initialize cache for update */
-            for ( int k = 0; k < ELEMENTLENGTH; ++k ) { cache1[k] = 0.0; }
+            for ( int k = 0; k < ELEMENT_LENGTH; ++k ) { cache1[k] = 0.0; }
             
             /* sum up all tangential elements */
             for ( int j = 0; j < numberOfElements; ++j )
             {
                 /* compute logarithm */
-                int index = j*ELEMENTLENGTH;
+                int index = j*ELEMENT_LENGTH;
                 logMap( &result[0], &f[index], &cache2[0] );
                 
                 /* add computed element */
-                for ( int k = 0; k < ELEMENTLENGTH; ++k) { cache1[k] += c*cache2[k]; }
+                for ( int k = 0; k < ELEMENT_LENGTH; ++k) { cache1[k] += c*cache2[k]; }
                 
             } /* end of summ of all tangential contributions */
             
@@ -743,7 +743,7 @@ namespace manifold {
             expMap( &result[0], &cache1[0], &cache2[0] );
             
             /* update result */
-            for ( int k = 0; k < ELEMENTLENGTH; ++k ) { result[k] = cache2[k]; }
+            for ( int k = 0; k < ELEMENT_LENGTH; ++k ) { result[k] = cache2[k]; }
             
         } /* end main iteration */
 
