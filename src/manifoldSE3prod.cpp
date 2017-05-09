@@ -16,10 +16,9 @@
 
 #include <iostream>
 #include <cmath>
-#include "../include/manifold.h"
 #include <complex>
+#include <manifold.h>
 
-#define PI 3.141592653589793
 #define EPSILON 0.00000001
 
 namespace manifold {
