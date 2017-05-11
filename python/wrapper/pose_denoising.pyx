@@ -3,7 +3,7 @@ cimport numpy as np
 
 np.import_array()
 
-cdef extern from '../include/manifold.h' namespace 'manifold':
+cdef extern from '../../include/manifold.h' namespace 'manifold':
     void proximalPointAlgorithm( double* f,
                                  double* x,
                                  int m,
