@@ -13,5 +13,11 @@ setup(
                   extra_compile_args=["-std=c++11", "-DSE3PROD"],
                   extra_link_args=["-std=c++11"]
                   )
+    ],
+    install_requires=[
+        'cython',
+        'h5py',
+        'matplotlib',
+        'numpy',
     ]
 )
