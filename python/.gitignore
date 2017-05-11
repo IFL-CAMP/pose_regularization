@@ -1,0 +1,8 @@
+build
+dist
+pose_denoising.egg-info
+pose_denoising.cpp
+
+__pycache__
+.cache
+*.so
