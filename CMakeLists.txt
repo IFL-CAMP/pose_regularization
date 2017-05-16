@@ -12,3 +12,18 @@ set(SOURCE_FILES
         src/manifoldSE3prod.cpp)
 
 add_library(poseRegularizationToolbox ${SOURCE_FILES})
+
+# test
+
+enable_testing()
+add_subdirectory(test/ext/gtest)
+
+set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
+
+file(GLOB TEST_SRC_FILES test/*.cpp)
+add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
+add_dependencies(${PROJECT_TEST_NAME} googletest)
+
+include_directories(${GTEST_INCLUDE_DIRS})
+
+add_test(test1 ${PROJECT_TEST_NAME})

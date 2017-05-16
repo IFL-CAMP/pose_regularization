@@ -7,3 +7,5 @@ matlab/denoiseSE3prod.mexmaci64
 matlab/denoiseSE3prod.mexw64
 
 .cache
+
+*.kdev4
