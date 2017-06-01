@@ -15,15 +15,20 @@ add_library(poseRegularizationToolbox ${SOURCE_FILES})
 
 # test
 
-enable_testing()
-add_subdirectory(test/ext/gtest)
+option(DO_TESTS "Perform unit tests" OFF)
 
-set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
+if(DO_TESTS)
+    enable_testing()
+    add_subdirectory(test/ext/gtest)
 
-file(GLOB TEST_SRC_FILES test/*.cpp)
-add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
-add_dependencies(${PROJECT_TEST_NAME} googletest)
+    set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
 
-include_directories(${GTEST_INCLUDE_DIRS})
+    file(GLOB TEST_SRC_FILES test/*.cpp)
+    add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
+    add_dependencies(${PROJECT_TEST_NAME} googletest)
 
-add_test(test1 ${PROJECT_TEST_NAME})
+    include_directories(${GTEST_INCLUDE_DIRS})
+
+    add_test(test1 ${PROJECT_TEST_NAME})
+endif(DO_TESTS)
+
