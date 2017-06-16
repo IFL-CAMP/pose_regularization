@@ -6,3 +6,5 @@ pose_denoising.cpp
 __pycache__
 .cache
 *.so
+*.o
+*.pyc
