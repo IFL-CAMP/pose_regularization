@@ -9,3 +9,5 @@ matlab/denoiseSE3prod.mexw64
 .cache
 
 *.kdev4
+*.so
+*.o
