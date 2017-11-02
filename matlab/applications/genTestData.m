@@ -1,4 +1,4 @@
-function [Pgt, Pnoise] = genTestData()
+function [Pgt, Pnoise] = genTestData(kappa)
 
 close all
 
@@ -35,7 +35,7 @@ t = squeeze(Pgt(1:3,4,:));
 
 % sample from von Mises-Fisher distribution
 cd CHMC
-kappa = 100;
+%kappa = 100;
 [~,qs] = binghamVonMisesFisherGibbsSampler(zeros(4),kappa*[1,0,0,0]',2*(N+1)+1);
 cd ..
 
