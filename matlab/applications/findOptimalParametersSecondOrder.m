@@ -4,7 +4,7 @@
 
 addpath('..')
 
-% load paramsFirstOrder.mat
+load paramsFirstOrder.mat
 
 iteration_steps = 1000;
 inner_steps = 50;
