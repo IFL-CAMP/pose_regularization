@@ -31,9 +31,7 @@ namespace manifold {
     /********** function for asserting the element length **********/
     bool wrongElementLength( int value )
     {
-        bool flag = true;
-        if ( value == ELEMENT_LENGTH ) { flag = false; }
-        return flag;
+        return value != ELEMENT_LENGTH;
     }
     
     /************* geodesic path length for data term *************/
@@ -51,12 +49,12 @@ namespace manifold {
             switch (p)
             {
                 /* L^2-norm */
-                case 2:
+                case L2:
                     tau = lambda/(1.0+lambda);
                     break;
                     
                     /* L^1-norm => soft thresholding */
-                case 1:
+                case L1:
                     if(lambda<dist)
                     {
                         tau = lambda/dist;
@@ -68,7 +66,7 @@ namespace manifold {
                     break;
                     
                     /* Huber-norm */
-                case 0:
+                case HUBER:
                     
                     /* old implementation of Laurent, should be checked in a future version */
                     double tau_Huber = 1.0;
@@ -115,12 +113,12 @@ namespace manifold {
             switch (q)
             {
                 /* L^2-norm */
-                case 2:
+                case L2:
                     tau = lambda*alpha/(2.0*alpha*lambda+1.0);
                     break;
                     
                     /* L^1-norm => soft thresholding */
-                case 1:
+                case L1:
                     tau = lambda*alpha/dist;
                     if(tau > 0.5)
                     {
@@ -129,7 +127,7 @@ namespace manifold {
                     break;
                     
                     /* Huber-norm */
-                case 0:
+                case HUBER:
                     
                     /* old implementation of Laurent, should be checked in a future version */
                     double tau_Huber = 1.0;
@@ -162,7 +160,7 @@ namespace manifold {
                                              double * startElResPtr )
     {
         /* initialize memory for intermediate results */
-        double * cache = new double[_elementLength]; 
+        double cache[_elementLength];
         
         /* compute logarithm and distance */
         double dist = _log( startElPtr, destElPtr, cache );
@@ -177,10 +175,6 @@ namespace manifold {
         
         /* compute proximal mapping for data term */
         _exp( startElPtr, cache, startElResPtr );
-        
-        /* free memory */
-        delete[] cache;
-        
     };
     
     void ProximalMapFirstOrder::operator() ( double * startElPtr,
@@ -190,8 +184,8 @@ namespace manifold {
                                              double * startElResPtr )
     {
         /* initialize memory for intermediate results */
-        double * cache = new double[_elementLength];
-        
+        double cache[_elementLength];
+
         /* compute logarithm and distance */
         double dist = _log( startElPtr, destElPtr, cache );
         
@@ -206,10 +200,6 @@ namespace manifold {
         /* compute proximal mapping for data term */
         _exp( startElPtr, cache, startElResPtr );
         
-        
-        /* free memory */
-        delete[] cache;
-        
     };
     
     void ProximalMapFirstOrder::operator() ( double * startElPtr,
@@ -220,9 +210,9 @@ namespace manifold {
                                              double * destElResPtr )
     {
         /* initialize memory for intermediate results */
-        double * cache1 = new double[_elementLength];
-        double * cache2 = new double[_elementLength];
-        
+        double cache1[_elementLength];
+        double cache2[_elementLength];
+
         /* compute logarithm and distance */
         double dist = _log( startElPtr, destElPtr, cache1 );
         _log( destElPtr, startElPtr, cache2 );
@@ -239,10 +229,6 @@ namespace manifold {
         /* compute proximal mapping for data term */
         _exp( startElPtr, cache1, startElResPtr );
         _exp( destElPtr, cache2, destElResPtr );
-        
-        /* free memory */
-        delete[] cache1;
-        delete[] cache2;
     };
     /************* end proximalMapFirstOrder::operator() *************/
         
@@ -259,27 +245,28 @@ namespace manifold {
                                               double * y3 )
     {
         /* allocate memory */
-        double * aux1 = new double[_elementLength];
-        double * aux2 = new double[_elementLength];
-        double * aux3 = new double[_elementLength];
-        double * ym = new double[_elementLength];
-        double * cache = new double[_elementLength];
-        double * log_ym_y2 = new double[_elementLength];
-        double * log_y2_ym = new double[_elementLength];
-        double * log_y1_y3 = new double[_elementLength];
-        double * log_y3_y1 = new double[_elementLength];
-        double * log_y1_x1 = new double[_elementLength];
-        double * log_y2_x2 = new double[_elementLength];
-        double * log_y3_x3 = new double[_elementLength];
-        double * grad_1 = new double[_elementLength];
-        double * grad_2 = new double[_elementLength];
-        double * grad_3 = new double[_elementLength];
-        double * basis_x_coeffs = new double[_elementLength];
-        double * basisElements1 = new double[_dimension*_elementLength];
-        double * basisElements2 = new double[_dimension*_elementLength];
-        double * eigenvalues = new double[_dimension];
-        double * coeffs1 = new double[_dimension];
-        double * coeffs2 = new double[_dimension];
+        double aux1[_elementLength];
+        double aux2[_elementLength];
+        double aux3[_elementLength];
+        double ym[_elementLength];
+        double cache[_elementLength];
+        double log_ym_y2[_elementLength];
+        double log_y2_ym[_elementLength];
+        double log_y1_y3[_elementLength];
+        double log_y3_y1[_elementLength];
+        double log_y1_x1[_elementLength];
+        double log_y2_x2[_elementLength];
+        double log_y3_x3[_elementLength];
+        double grad_1[_elementLength];
+        double grad_2[_elementLength];
+        double grad_3[_elementLength];
+        double basis_x_coeffs[_elementLength];
+        double basisElements1[_dimension*_elementLength];
+        double basisElements2[_dimension*_elementLength];
+        double eigenvalues[_dimension];
+        double coeffs1[_dimension];
+        double coeffs2[_dimension];
+
         double length2ndDiff = 0.0;
         double factor = 0.0;
         double tau = 0.0;
@@ -489,30 +476,7 @@ namespace manifold {
             _exp( aux3, grad_3, y3 );
 
         } /* end main iteration */
-        
-        /* free memory */
-        delete[] aux1;
-        delete[] aux2;
-        delete[] aux3;
-        delete[] cache;
-        delete[] ym;
-        delete[] log_ym_y2;
-        delete[] log_y2_ym;
-        delete[] log_y3_y1;
-        delete[] log_y1_y3;
-        delete[] log_y1_x1;
-        delete[] log_y2_x2;
-        delete[] log_y3_x3;
-        delete[] grad_1;
-        delete[] grad_2;
-        delete[] grad_3;
-        delete[] basis_x_coeffs;
-        delete[] basisElements1;
-        delete[] basisElements2;
-        delete[] eigenvalues;
-        delete[] coeffs1;
-        delete[] coeffs2;
-       
+
     };
     /************* end proximalMapSecondOrder::operator() *************/
 
@@ -544,10 +508,10 @@ namespace manifold {
         for ( int i = 0; i < arrayLength; ++i ) { x[i] = f[i]; }
         
         /* initialize caches */
-        double * cache1 = new double[ELEMENT_LENGTH];
-        double * cache2 = new double[ELEMENT_LENGTH];
-        double * cache3 = new double[ELEMENT_LENGTH];
-		double * cache4 = new double[ELEMENT_LENGTH];
+        double cache1[ELEMENT_LENGTH];
+        double cache2[ELEMENT_LENGTH];
+        double cache3[ELEMENT_LENGTH];
+        double cache4[ELEMENT_LENGTH];
 
         /* main iteration */
         for ( int ll = 0; ll < steps; ++ll ) {
@@ -685,12 +649,6 @@ namespace manifold {
              */            
             
         } /* end main iteration */
-        
-        /* free memory */
-        delete[] cache1;
-        delete[] cache2;
-        delete[] cache3;
-		delete[] cache4;
 		
     };
     /************** end proximal point algorithm 3D *************/
@@ -712,9 +670,9 @@ namespace manifold {
         ExponentialMap expMap( ELEMENT_LENGTH );
         
         /* initialize cache memory */
-        double * cache1 = new double[ELEMENT_LENGTH];
-        double * cache2 = new double[ELEMENT_LENGTH];
-        
+        double cache1[ELEMENT_LENGTH];
+        double cache2[ELEMENT_LENGTH];
+
         /* initialize constant for efficient normalization */
         double c = 1.0/( (double)numberOfElements );
 		
@@ -747,9 +705,6 @@ namespace manifold {
             
         } /* end main iteration */
 
-        /* free memory */
-        delete[] cache1;
-        delete[] cache2;
     }
     /************ end iterative Karcher mean ************/
     

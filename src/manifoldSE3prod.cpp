@@ -200,7 +200,7 @@ namespace manifold {
     {
         
         /* allocate memory */
-        double * C = new double[_elementLength];
+        double C[_elementLength];
         
         /* compute inverted base element * dest element (only for SO(3)-component) */
         invAmultB( baseElPtr, destElPtr, C );
@@ -253,9 +253,6 @@ namespace manifold {
 		resultElPtr[14] = destElPtr[14] - baseElPtr[14];
 		resultElPtr[15] = 0.0;
         
-        /* free memory */
-        delete[] C;
-        
         /* compute length of logarithm without considering last element
          * (note that translational component does not have factor 1/2)
          */
@@ -278,7 +275,7 @@ namespace manifold {
     {
        
 		/* compute matrix exponential of destination element */
-		double * expTangElPtr = new double[_elementLength];
+		double expTangElPtr[_elementLength];
 		matrixExponential(destElPtr, expTangElPtr);
 
         /* multiply base element with matrix exponential of tangential element */
@@ -289,9 +286,6 @@ namespace manifold {
 		resultElPtr[13] = baseElPtr[13] + destElPtr[13];
 		resultElPtr[14] = baseElPtr[14] + destElPtr[14];
 		resultElPtr[15] = 1.0;
-
-		/* free memory */
-		delete[] expTangElPtr;
 
         
     };
@@ -362,7 +356,7 @@ namespace manifold {
         
         /* perform Schur decompositon */
         double beta = 0.0;
-        double * Um = new double[9];
+        double Um[9];
         beta = schurDecomposition(tagentSpaceElement, Um);
 
 		/* compute eigenvalues */
@@ -460,9 +454,6 @@ namespace manifold {
         basisElements[76] = 0.0;
         basisElements[77] = 0.0;
         basisElements[78] = 1.0;
-
-
-        delete[] Um;
         
     };
     /**************** end computeFrame::operator() ****************/
@@ -490,11 +481,11 @@ namespace manifold {
         /* at first we implement the SO(3) parallel transport */
                 
 		/* allocate memory */
-		double * v = new double[_elementLength];
-		double * exp_aux = new double[_elementLength];
-		double * inv_dest_base = new double[_elementLength];
-		double * left_factor = new double[_elementLength];
-		double * aux = new double[_elementLength];
+		double v[_elementLength];
+		double exp_aux[_elementLength];
+		double inv_dest_base[_elementLength];
+		double left_factor[_elementLength];
+		double aux[_elementLength];
         
         /* initialize log map */
 		LogarithmMap logMap(_elementLength);
@@ -541,14 +532,6 @@ namespace manifold {
         {
 			outputFrameVectors[i] = inputFrameVectors[i];
         }
-        
-
-		/* free memory */
-		delete[] v;
-		delete[] exp_aux;
-		delete[] inv_dest_base;
-		delete[] left_factor;
-		delete[] aux;
  
     };
     /************** end parallelTransport::operator() *************/
