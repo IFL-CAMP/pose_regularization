@@ -5,7 +5,7 @@ clc;
 addpath('..')
 
 % generate test data
-[Pgt, Pnoise] = genTestData();
+[Pgt, Pnoise] = genTestData(100);
 
 % get number of poses
 N = size(Pgt,3);
