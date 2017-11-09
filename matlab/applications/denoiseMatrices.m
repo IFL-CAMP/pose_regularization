@@ -1,4 +1,4 @@
-function [ denoisedMatrices ] = denoiseMatrices( matrices )
+function [ denoisedMatrices ] = denoiseMatrices( matrices, p, q, r, alpha, beta, gamma, steps )
 %DENOISEMATRICES Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -15,8 +15,8 @@ function [ denoisedMatrices ] = denoiseMatrices( matrices )
     % run algorithm without 2nd order regularization
     denoisedMatricesColumn = denoiseSE3prod(matricesColumn,...
                             N,1,1,...
-                            1,0,0,5.0,...
-                            2,0.0,0.0,100,0);
+                            p,q,r,5.0,...
+                            alpha,beta,gamma,steps,0);
 
 
     % re-format poses
