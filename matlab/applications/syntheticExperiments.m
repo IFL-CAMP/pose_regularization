@@ -5,7 +5,7 @@ clc;
 addpath('..')
 
 % generate test data
-[Pgt, Pnoise] = genTestData(100);
+[Pgt, Pnoise] = genTestData(5);
 
 % get number of poses
 N = size(Pgt,3);
@@ -13,7 +13,7 @@ N = size(Pgt,3);
 % only 1st order huber regularization with 100 iterations
 Pden1 = denoiseSE3prod(reshape(Pnoise,16,N),N,1,1,...
                         1,0,0,0,...
-                        10,0,0, 1000,0);
+                        10,0,0, 100,0);
 
 Pden1 = reshape(Pden1,4,4,N);
 
@@ -21,7 +21,7 @@ Pden1 = reshape(Pden1,4,4,N);
 % l1 penalty for data term, 1st-order TV and 2nd order TV
 Pden2 = denoiseSE3prod(reshape(Pnoise,16,N),N,1,1,...
                        1,1,1,0.25,...
-                       2,1,0,500,100);
+                       1,1,1,50,10);
 
 Pden2 = reshape(Pden2,4,4,N);
 

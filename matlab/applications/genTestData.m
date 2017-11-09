@@ -1,4 +1,8 @@
-function [Pgt, Pnoise] = genTestData(kappa)
+function [Pgt, Pnoise] = genTestData(testCase)
+
+% define parameters for noise distributions globally
+kappa = [10 50 100 500 1000];
+sigma = [1 0.5 0.25 0.1 0.05];
 
 close all
 
@@ -35,13 +39,11 @@ t = squeeze(Pgt(1:3,4,:));
 
 % sample from von Mises-Fisher distribution
 cd CHMC
-%kappa = 100;
-[~,qs] = binghamVonMisesFisherGibbsSampler(zeros(4),kappa*[1,0,0,0]',2*(N+1)+1);
+[~,qs] = binghamVonMisesFisherGibbsSampler(zeros(4),kappa(testCase)*[1,0,0,0]',2*(N+1)+1);
 cd ..
 
 % sample from Gaussian distribution and apply noise
-sigma = 0.05;
-Sigma = sigma*eye(3);
+Sigma = sigma(testCase)*eye(3);
 C = chol(Sigma);
 t = (t'+ randn(size(t'))*C)';
 
