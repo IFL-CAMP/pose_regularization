@@ -1,10 +1,12 @@
 function err = comp_dist(Pgt,Pden)
 
     err = 0;
-    for i = 1:size(Pgt,2)
-        if size(Pgt, 1) == 16
+    if size(Pgt, 1) == 16
+        for i = 1:size(Pgt,2)
             err = err + comp_elem_dist(Pgt(:,i),Pden(:,i));
-        else
+        end
+    else
+        for i = 1:size(Pgt,3)
             err = err + comp_elem_dist(Pgt(:,:,i),Pden(:,:,i));
         end
     end
@@ -21,7 +23,7 @@ function val = comp_elem_dist(base, dest)
     result(1:3,4) = dest(1:3,4)-base(1:3,4);
     
     %val = 0*(trace(result(1:3,1:3)'*result(1:3,1:3))) + result(1:3,4)' * result(1:3,4);
-    val = 0.5*(trace(result(1:3,1:3)'*result(1:3,1:3))) + result(1:3,4)' * result(1:3,4);
+     val = 0.5*(trace(result(1:3,1:3)'*result(1:3,1:3))) + result(1:3,4)' * result(1:3,4);
 
 end
 
