@@ -32,11 +32,9 @@ for testCase = 1:5
     for p = [0,1,2]
         for q = [0,1,2]
             for alpha = [0.01, 0.1, 0.5, 1, 2, 5, 10, 20]
-                
                 Pden = denoiseSE3prod(Pnoise,N,1,1,...
                     p,q,0,0,... % r = 0, inner_factor = 0
-                    alpha,0,0, iteration_steps,0); % beta = gamma = 0, inner_steps = 0
-                
+                    alpha,0,0, iteration_steps, 0); % beta = gamma = 0, inner_steps = 0
                 err = comp_dist(Pgt,Pden);
                 results(count,:) = [err_ref, err, p, q, alpha];
                 count = count + 1;

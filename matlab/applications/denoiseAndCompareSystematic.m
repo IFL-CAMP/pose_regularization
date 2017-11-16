@@ -30,20 +30,26 @@ err_ref = comp_dist(ground_truth_data, target_data);
 
 RESULTS3 = {};
 for bestResult2Index = 1:5
+    results = zeros(5, 7);
         
     % find optimal parameters
     e = RESULTS2{bestResult2Index}(:,2);
-    [~, index] = min(e);
-    p = RESULTS2{bestResult2Index}(index,3);
-    q = RESULTS2{bestResult2Index}(index,4);
-    r = RESULTS2{bestResult2Index}(index,5);
-    alpha = RESULTS2{bestResult2Index}(index,6);
-    beta = RESULTS2{bestResult2Index}(index,7);
-    
-    denoised_target_data = denoiseMatrices(target_data, p, q, r, alpha, beta, 0, 1000);
-    
-    err = comp_dist(ground_truth_data, denoised_target_data);
-    results = [err_ref, err, p, q, r, alpha, beta];
+    [sortede, sortedeindices] = sort(e);
+    eIndicesToTry = sortedeindices(1:5);
+    for i = 1:length(eIndicesToTry)
+        index = eIndicesToTry(i);
+
+        p = RESULTS2{bestResult2Index}(index,3);
+        q = RESULTS2{bestResult2Index}(index,4);
+        r = RESULTS2{bestResult2Index}(index,5);
+        alpha = RESULTS2{bestResult2Index}(index,6);
+        beta = RESULTS2{bestResult2Index}(index,7);
+
+        denoised_target_data = denoiseMatrices(target_data, p, q, r, alpha, beta, 0, 1000);
+
+        err = comp_dist(ground_truth_data, denoised_target_data);
+        results(i, :) = [err_ref, err, p, q, r, alpha, beta];
+    end
     RESULTS3{bestResult2Index} = results;
 end
 
