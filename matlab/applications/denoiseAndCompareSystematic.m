@@ -45,7 +45,7 @@ for bestResult2Index = 1:5
         alpha = RESULTS2{bestResult2Index}(index,6);
         beta = RESULTS2{bestResult2Index}(index,7);
 
-        denoised_target_data = denoiseMatrices(target_data, p, q, r, alpha, beta, 0, 1000);
+        denoised_target_data = denoiseMatrices(target_data, p, q, r, alpha, beta, 0, 0.25, 100, 50);
 
         err = comp_dist(ground_truth_data, denoised_target_data);
         results(i, :) = [err_ref, err, p, q, r, alpha, beta];

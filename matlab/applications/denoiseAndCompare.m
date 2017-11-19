@@ -25,7 +25,7 @@ ground_truth_data = ground_truth_data.tracking;
 target_data = load(strcat(file_prefix, '_', comparison_target, file_suffix));
 target_data = target_data.tracking;
 
-denoised_target_data = denoiseMatrices(target_data, 2, 0, 1, 5, 0.1, 0, 100);
+denoised_target_data = denoiseMatrices(target_data, 2, 0, 2, 5, 0.1, 0, 0.25, 100, 50);
 
 DO_COMPARATIVE_PLOTS = true;
 DO_PLOTS = false;
