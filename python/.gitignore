@@ -1,0 +1,10 @@
+build
+dist
+pose_regularization.egg-info
+
+__pycache__
+.cache
+*.so
+*.o
+*.pyc
+*.cpp

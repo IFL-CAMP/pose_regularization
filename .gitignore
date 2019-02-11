@@ -1,0 +1,14 @@
+.idea
+*.iml
+cmake-build-debug
+
+matlab/denoiseSE3prod.mexa64
+matlab/denoiseSE3prod.mexmaci64
+matlab/denoiseSE3prod.mexw64
+
+.cache
+
+*.kdev4
+*.so
+*.o
+*.pyc

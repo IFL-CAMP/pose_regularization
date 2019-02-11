@@ -1,0 +1,7 @@
+
+In order to execute this test without installing the extension:
+
+- go to the wrapper directory
+- issue the command: python setup.py build_ext --inplace
+- return to the test directory
+- python test_pose_denoising.py
