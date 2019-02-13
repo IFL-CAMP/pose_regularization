@@ -7,15 +7,15 @@ This repository contains the implementation of the method proposed in
          with an Application to 3D Freehand Ultrasound},
   author={Esposito, Marco and Hennersperger, Christoph and Göbl, Rüdiger and Demaret, Laurent and Storath, Martin and Navab, Nassir
            and Baust, Maximilian and Weinmann, Andreas},
-  journal={TBD},
+  journal={IEEE Transactions on Medical Imaging},
   volume={TBD},
   number={TBD},
   pages={TBD},
   year={2019},
-  publisher={TBD}
+  publisher={ IEEE }
 }
 ```
-for the regularization of 6-degrees-of-freedom pose streams (such as the output of a tracking system). The method has 
+(PREPRINT available [here](https://ieeexplore.ieee.org/document/8638838)) for the regularization of 6-degrees-of-freedom pose streams, such as the output of a tracking system. The method has 
 the ability to compensate for significant jitter, while maintaining the features of the original signal (e.g. sudden 
 and sharp variations in the movement direction). 
 
