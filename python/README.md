@@ -8,7 +8,10 @@ Numpy and Cython must be installed in order to build this extension. It is recom
 to use a virtual environment, as usual.
 
 Once in the `python` directory, you can build and install the extension into your environment:
-`pip install .`
+```
+python setup.py build_ext
+pip install .
+```
 
 ### Testing the Python extension
 
