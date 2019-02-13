@@ -15,9 +15,12 @@ Once in the `python` directory, you can build and install the extension into you
 ```
 cd <REPO_ROOT>/python
 pip install numpy cython
-python setup.py build_ext
-pip install .
+python setup.py bdist_wheel
+pip install dist/pose_regularization-*.whl
 ```
+
+The resulting wheel file in `python/dist` can be saved for later use or redistributed 
+(to compatible systems).
 
 ### Using the package
 
