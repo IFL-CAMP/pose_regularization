@@ -23,6 +23,12 @@ def replicate_regularization(filename):
 TEST_DATA_DIR = '../../../test/data'
 
 
+def test_enums():
+    assert(int(pose_regularization.Regularization.HUBER) == 0)
+    assert(int(pose_regularization.Regularization.L1) == 1)
+    assert(int(pose_regularization.Regularization.L2) == 2)
+
+
 def test_optical():
     replicate_regularization(os.path.join(TEST_DATA_DIR,'case5_preset_optical.mat'))
 
@@ -35,6 +41,7 @@ def test_em2():
     replicate_regularization(os.path.join(TEST_DATA_DIR,'case5_preset_em2.mat'))
 
 if __name__ == '__main__':
+    test_enums()
     test_optical()
     test_em1()
     test_em2()

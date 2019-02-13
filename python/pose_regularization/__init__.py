@@ -1,1 +1,1 @@
-from .pose_regularization import regularize_matrices_4x4
+from .pose_regularization import regularize_matrices_4x4, Regularization

@@ -12,7 +12,13 @@ setup(
     ),
     packages=['pose_regularization'],
     install_requires=[
+        'enum34;python_version<"3.4"',
         'cython',
         'numpy',
+    ],
+    tests_require=[
+        'cython',
+        'numpy',
+        'scipy',
     ]
 )
