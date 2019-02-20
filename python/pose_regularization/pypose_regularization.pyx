@@ -1,7 +1,3 @@
-# distutils: language = c++
-# distutils: extra_compile_args=["-std=c++11"]
-# distutils: include_dirs = ../include
-
 from libcpp.vector cimport vector
 cimport numpy as np
 import numpy as np

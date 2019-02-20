@@ -5,6 +5,9 @@ import numpy as np
 from scipy.io import loadmat
 import pose_regularization
 
+np.set_printoptions(precision=5)
+
+
 def replicate_regularization(filename):
 
     data = loadmat(filename)
@@ -17,10 +20,12 @@ def replicate_regularization(filename):
         data['inner_factor'], data['alpha'],
         data['beta'], data['steps'], data['inner_steps'])
 
-    assert((b == p_r).all())
+    ATOL = 1e-07 # relaxed for portability
+
+    assert(np.isclose(b, p_r, atol=ATOL).all())
 
 
-TEST_DATA_DIR = '../../../test/data'
+TEST_DATA_DIR = '../test/data'
 
 
 def test_enums():

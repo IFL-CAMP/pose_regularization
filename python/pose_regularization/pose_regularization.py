@@ -1,7 +1,7 @@
 
 from enum import IntEnum
 import numpy as np
-from . import pypose_regularization
+import pypose_regularization
 
 
 class Regularization(IntEnum):

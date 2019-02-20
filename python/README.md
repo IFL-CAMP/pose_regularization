@@ -45,9 +45,9 @@ poses_regularized = regularize_matrices_4x4(poses_noisy,
 
 ### Testing the Python extension
 
-After building and installing the extension as in the previous section, you can go into the 
-`python/pose_regularization/test` directory, and execute the tests:
+If you have cython and numpy in your virtualenv, you can execute the tests from 
+the `python` directory:
 ```$bash
-cd <REPO_ROOT>/python/pose_regularization/test
-python test_pose_regularization.py
+cd <REPO_ROOT>/python
+python setup.py test
 ```
