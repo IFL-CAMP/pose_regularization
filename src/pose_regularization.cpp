@@ -274,10 +274,10 @@ namespace pose_regularization {
          * (note that translational component does not have factor 1/2)
          */
         double dist = 0.0;
-        for (int i = 0; i < SE3_ELEMENT_LENGTH - 4; ++i) {
+        for (size_t i = 0; i < SE3_ELEMENT_LENGTH - 4; ++i) {
             dist += 0.5 * y1[i] * y1[i];
         }
-        for (int i = SE3_ELEMENT_LENGTH - 4; i < SE3_ELEMENT_LENGTH - 1; ++i) {
+        for (size_t i = SE3_ELEMENT_LENGTH - 4; i < SE3_ELEMENT_LENGTH - 1; ++i) {
             dist += y1[i] * y1[i];
         }
 
@@ -320,11 +320,11 @@ namespace pose_regularization {
 
         double prod = 0.0;
         // rotational components
-        for (int i = 0; i < SE3_ELEMENT_LENGTH - 4; ++i) {
+        for (size_t i = 0; i < SE3_ELEMENT_LENGTH - 4; ++i) {
             prod += 0.5 * A[i] * B[i];
         }
         // translational components
-        for (int i = SE3_ELEMENT_LENGTH - 4; i < SE3_ELEMENT_LENGTH - 1; ++i) {
+        for (size_t i = SE3_ELEMENT_LENGTH - 4; i < SE3_ELEMENT_LENGTH - 1; ++i) {
             prod += A[i] * B[i];
         }
         return prod;
@@ -344,7 +344,7 @@ namespace pose_regularization {
     {
 
         /* generic initialization */
-        for (int i = 0; i < SE3_DIMENSIONS; i++) {
+        for (size_t i = 0; i < SE3_DIMENSIONS; i++) {
             outputCoefficients[i] = 0.5 * inputCoefficients[i];
         }
 
@@ -446,8 +446,8 @@ namespace pose_regularization {
         basisElements[2][15] = 0.0;
 
         /* eigenvectors corresponding to translation */
-        for (int basisElementInd = 3; basisElementInd < SE3_DIMENSIONS; basisElementInd++) {
-            for (int ind = 0; ind < SE3_ELEMENT_LENGTH; ++ind) {
+        for (size_t basisElementInd = 3; basisElementInd < SE3_DIMENSIONS; basisElementInd++) {
+            for (size_t ind = 0; ind < SE3_ELEMENT_LENGTH; ++ind) {
                 basisElements[basisElementInd][ind] = 0.0;
             }
         }
@@ -488,12 +488,12 @@ namespace pose_regularization {
         /* compute logarithm map*/
         SE3_ELEMENT v;
         SE3LogarithmMap(baseEl, destEl, v);
-        for (int i = 0; i < SE3_ELEMENT_LENGTH; ++i) {
+        for (size_t i = 0; i < SE3_ELEMENT_LENGTH; ++i) {
             v[i] *= 0.5;
         }
 
         /* keep only SO(3) part */
-        for (int i = 12; i < 16; i++) {
+        for (size_t i = 12; i < SE3_ELEMENT_LENGTH; i++) {
             v[i] = 0.0;
         }
 
@@ -511,17 +511,17 @@ namespace pose_regularization {
 
         /* compute parallel transport for all basis elements */
         SE3_ELEMENT aux;
-        for (int i = 0; i < SE3_DIMENSIONS - 3; ++i) {
+        for (size_t i = 0; i < SE3_DIMENSIONS - 3; ++i) {
             SO3Product_AB(left_factor, inputFrameVectors[i], aux);
             SO3Product_AB(aux, exp_aux, outputFrameVectors[i]);
 
-            for (int j = 12; j < 16; j++) {
+            for (size_t j = 12; j < SE3_ELEMENT_LENGTH; j++) {
                 outputFrameVectors[i][j] = 0.0;
             }
         }
 
         /* compute parallel transport for translational elements (flat geometry!) */
-        for (int i = 3; i < 6; ++i) {
+        for (size_t i = 3; i < 6; ++i) {
             outputFrameVectors[i] = inputFrameVectors[i];
         }
 
@@ -675,7 +675,7 @@ namespace pose_regularization {
         double t = dataPathLength(lambda, dist, r);
 
         /* multiply computed logarithm with t */
-        for (int i = 0; i < SE3_ELEMENT_LENGTH; ++i) {
+        for (size_t i = 0; i < SE3_ELEMENT_LENGTH; ++i) {
             cache[i] *= t;
         }
 
@@ -696,7 +696,7 @@ namespace pose_regularization {
 //        double t = regPathLength(alpha, lambda, dist, r);
 //
 //        /* multiply computed logarithm with t */
-//        for (int i = 0; i < SE3_ELEMENT_LENGTH; ++i) {
+//        for (size_t i = 0; i < SE3_ELEMENT_LENGTH; ++i) {
 //            cache[i] *= t;
 //        }
 //
@@ -731,7 +731,7 @@ namespace pose_regularization {
         double t = regPathLength(alpha, lambda, dist, r);
 
         /* multiply computed logarithm with t */
-        for (int i = 0; i < SE3_ELEMENT_LENGTH; ++i) {
+        for (size_t i = 0; i < SE3_ELEMENT_LENGTH; ++i) {
             cache1[i] *= t;
             cache2[i] *= t;
         }
@@ -767,7 +767,7 @@ namespace pose_regularization {
                                    SE3_ELEMENT &y3)
     {
         /* initialization */
-        for (int i = 0; i < SE3_ELEMENT_LENGTH; ++i) {
+        for (size_t i = 0; i < SE3_ELEMENT_LENGTH; ++i) {
             y1[i] = x1[i];
             y2[i] = x2[i];
             y3[i] = x3[i];
@@ -783,7 +783,7 @@ namespace pose_regularization {
             /* compute mean of y1 and y3, i.e., [y1, y3]_(d/2) */
             SE3_ELEMENT ym;
             SE3LogarithmMap(y1, y3, cache);
-            for (int j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
+            for (size_t j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
                 cache[j] *= 0.5;
             }
             SE3ExponentialMap(y1, cache, ym);
@@ -820,7 +820,7 @@ namespace pose_regularization {
             std::array<double, SE3_DIMENSIONS> coeffs1{};
             std::array<double, SE3_DIMENSIONS> coeffs2{};
 
-            for (int k = 0; k < SE3_DIMENSIONS; ++k) {
+            for (size_t k = 0; k < SE3_DIMENSIONS; ++k) {
                 coeffs1[k] = SE3InnerProduct(basisElements2[k], log_ym_y2);
             }
 
@@ -833,12 +833,12 @@ namespace pose_regularization {
 
             /* compute basis x coefficients */
             SE3_ELEMENT basis_x_coeffs;
-            for (int j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
+            for (size_t j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
                 basis_x_coeffs[j] = 0.0;
             }
 
-            for (int k = 0; k < SE3_DIMENSIONS; ++k) {
-                for (int j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
+            for (size_t k = 0; k < SE3_DIMENSIONS; ++k) {
+                for (size_t j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
                     basis_x_coeffs[j] += coeffs2[k] * basisElements1[k][j];
                 }
             }
@@ -861,7 +861,7 @@ namespace pose_regularization {
             /* adjust length of basis_x_coeffs and compose gradient at y1 */
             SE3_ELEMENT grad_1;
             SE3LogarithmMap(y1, x1, log_y1_x1);
-            for (int j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
+            for (size_t j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
                 grad_1[j] = tau * (basis_x_coeffs[j] * factor - log_y1_x1[j]);
             }
 
@@ -887,7 +887,7 @@ namespace pose_regularization {
             /* adjust length of basis_x_coeffs and compose gradient at y2 */
             SE3_ELEMENT grad_2;
             SE3LogarithmMap(y2, x2, log_y2_x2);
-            for (int j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
+            for (size_t j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
                 grad_2[j] = tau * (log_y2_ym[j] * factor - log_y2_x2[j]);
             }
 
@@ -903,7 +903,7 @@ namespace pose_regularization {
             SE3ParallelTransport(basisElements1, basisElements2, y1, ym);
 
             /* compute coefficients at ym */
-            for (int k = 0; k < SE3_DIMENSIONS; ++k) {
+            for (size_t k = 0; k < SE3_DIMENSIONS; ++k) {
                 coeffs1[k] = SE3InnerProduct(basisElements2[k], log_ym_y2);
             }
 
@@ -915,12 +915,12 @@ namespace pose_regularization {
             SE3AdjustCoefficientsMovingFrame(coeffs1, coeffs2, eigenvalues, t);
 
             /* compute basis x coefficients */
-            for (int j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
+            for (size_t j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
                 basis_x_coeffs[j] = 0.0;
             }
 
-            for (int k = 0; k < SE3_DIMENSIONS; ++k) {
-                for (int j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
+            for (size_t k = 0; k < SE3_DIMENSIONS; ++k) {
+                for (size_t j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
                     basis_x_coeffs[j] += coeffs2[k] * basisElements1[k][j];
                 }
             }
@@ -942,7 +942,7 @@ namespace pose_regularization {
             /* adjust length of basis_x_coeffs and compose gradient at y1 */
             SE3_ELEMENT grad_3;
             SE3LogarithmMap(y3, x3, log_y3_x3);
-            for (int j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
+            for (size_t j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
                 grad_3[j] = tau * (basis_x_coeffs[j] * factor - log_y3_x3[j]);
             }
 
@@ -950,7 +950,7 @@ namespace pose_regularization {
             SE3_ELEMENT aux1;
             SE3_ELEMENT aux2;
             SE3_ELEMENT aux3;
-            for (int j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
+            for (size_t j = 0; j < SE3_ELEMENT_LENGTH; ++j) {
                 aux1[j] = y1[j];
                 aux2[j] = y2[j];
                 aux3[j] = y3[j];
@@ -984,7 +984,7 @@ namespace pose_regularization {
             double lambda = 1.0 / pow((double) (ll + 1), 0.95 + 0.5 * pow((double) (ll + 1), -0.18));
 
             /* proximal mapping of data term */
-            for (int i = 0; i < f.size(); i++) {
+            for (size_t i = 0; i < f.size(); i++) {
                 SE3_ELEMENT cache;
                 SE3ProximalMapFirstOrder(p, x[i], f[i], lambda, cache);
                 x[i] = cache;
@@ -993,7 +993,7 @@ namespace pose_regularization {
             /* 1st order proximal mappings */
             if (alpha > 0) {
                 /* 1st order proximal mapping w.r.t. x-direction */
-                for (int i = 0; i < f.size() - 1; i++) {
+                for (size_t i = 0; i < f.size() - 1; i++) {
                     SE3_ELEMENT cache1, cache2;
                     SE3ProximalMapFirstOrder(q, x[i], x[i + 1], alpha, lambda, cache1, cache2);
                     x[i] = cache1;
@@ -1005,7 +1005,7 @@ namespace pose_regularization {
             if (beta > 0) {
 
                 /* 2nd order proximal mapping w.r.t. x-direction */
-                for (int i = 1; i < f.size() - 1; i++) {
+                for (size_t i = 1; i < f.size() - 1; i++) {
                     SE3_ELEMENT cache1, cache2, cache3;
                     SE3ProximalMapSecondOrder(r, x[i - 1], x[i], x[i + 1], beta, lambda, inner_factor, inner_steps,
                                               cache1, cache2, cache3);
