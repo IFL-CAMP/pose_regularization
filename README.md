@@ -8,10 +8,11 @@ This repository contains the implementation of the method proposed in
   author={Esposito, Marco and Hennersperger, Christoph and Göbl, Rüdiger and Demaret, Laurent and Storath, Martin and Navab, Nassir
            and Baust, Maximilian and Weinmann, Andreas},
   journal={IEEE Transactions on Medical Imaging},
-  volume={TBD},
-  number={TBD},
-  pages={TBD},
+  volume={38},
+  number={10},
+  pages={2245-2258},
   year={2019},
+  doi={10.1109/TMI.2019.2898480}, 
   publisher={ IEEE }
 }
 ```
